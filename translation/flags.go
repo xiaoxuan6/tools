@@ -11,6 +11,11 @@ func Flags() (flags []cli.Flag) {
 			Aliases: []string{"c"},
 			Usage:   "translation content",
 		},
+		&cli.StringFlag{
+			Name:    "filename",
+			Aliases: []string{"f"},
+			Usage:   "translation filename",
+		},
 	}
 	return
 }
