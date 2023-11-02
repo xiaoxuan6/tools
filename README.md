@@ -3,7 +3,7 @@
 # Install
 
 ```bash
-go install github.com/xiaoxuan6/tools@install
+go install github.com/xiaoxuan6/tools@latest
 ```     
 
 ## 翻译
