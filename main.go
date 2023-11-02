@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/tools/qrcode"
 	"github.com/xiaoxuan6/tools/translation"
 	"os"
 )
@@ -18,6 +19,13 @@ func main() {
 				Aliases: []string{"t"},
 				Flags:   translation.Flags(),
 				Action:  translation.Action,
+			},
+			{
+				Name:    "qrcode",
+				Usage:   "qrcode",
+				Aliases: []string{"q"},
+				Flags:   qrcode.Flags(),
+				Action:  qrcode.Action,
 			},
 		},
 	}

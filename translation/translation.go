@@ -30,7 +30,7 @@ func Action(c *cli.Context) error {
 			fileSize := f.Size()
 			fileSizeInMB := float64(fileSize) / (1024 * 1024)
 			if fileSizeInMB > 1 {
-				return fmt.Errorf("文件大小超过 1MB，无法翻译")
+				return fmt.Errorf(color.RedString("文件大小超过 1MB，无法翻译"))
 			}
 
 			content = fileGetContent(filename)
