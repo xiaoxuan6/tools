@@ -34,3 +34,8 @@ cat "test.txt" | tools q -s
 tools q -f "qrcode.png"
  ```
 
+## OCR
+
+```bash
+tools o -f ./23d3d34c-72a3-40ed-9281-5cf06566941b.jpg 
+```

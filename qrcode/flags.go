@@ -2,14 +2,12 @@ package qrcode
 
 import (
 	"fmt"
-	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/tools/common"
 	"net/url"
 	"os"
 	"path/filepath"
 )
-
-var ExtError = color.RedString("文件格式错误，请重新输入，支持的格式有：%s", "jpg, jpeg, png")
 
 func Flags() []cli.Flag {
 	flags := []cli.Flag{
@@ -33,8 +31,8 @@ func Flags() []cli.Flag {
 				}
 
 				ext := filepath.Ext(s)
-				if identify(ext) == false {
-					return fmt.Errorf(ExtError)
+				if common.Identify(ext) == false {
+					return fmt.Errorf(common.ExtError)
 				}
 
 				return nil
@@ -51,8 +49,8 @@ func Flags() []cli.Flag {
 				}
 
 				ext := filepath.Ext(u.Path)
-				if identify(ext) == false {
-					return fmt.Errorf(ExtError)
+				if common.Identify(ext) == false {
+					return fmt.Errorf(common.ExtError)
 				}
 
 				return nil
@@ -61,16 +59,4 @@ func Flags() []cli.Flag {
 	}
 
 	return flags
-}
-
-func identify(ext string) bool {
-	stat := false
-	extAllow := []string{".jpg", ".jpeg", ".png"}
-	for _, v := range extAllow {
-		if ext == v {
-			stat = true
-		}
-	}
-
-	return stat
 }
