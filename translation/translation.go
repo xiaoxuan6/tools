@@ -37,8 +37,9 @@ func Action(c *cli.Context) error {
 		}
 	} else {
 		content = c.String("content")
-		if content == "" {
-			content = setContent()
+		if len(content) < 1 {
+			stdin := c.Bool("stdin")
+			content = setContent(stdin)
 		}
 	}
 
@@ -73,7 +74,15 @@ func fileGetContent(filename string) string {
 	return string(f)
 }
 
-func setContent() string {
+func setContent(stdin bool) string {
+	if stdin {
+		b, err := ioutil.ReadAll(os.Stdin)
+		if err != nil {
+			return ""
+		}
+		return string(b)
+	}
+
 	content, _ := clipboard.ReadAll()
 	fmt.Println(color.RedString("翻译内容："), strings.TrimSpace(content))
 	return content

@@ -9,9 +9,12 @@ go install github.com/xiaoxuan6/tools@install
 ## 翻译
 
 ```bash
-tools t -c 翻译内容
+tools t -c "test"
+or 
+echo "test" | go run main.go t -s
+cat "test.txt" | go run main.go t -s
 or
-tools t -f 翻译文件
+tools t -f "a.txt"
 ```
 
 
