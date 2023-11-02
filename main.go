@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/urfave/cli/v2"
-	"githug.com/xiaoxuan6/tools/translation"
+	"github.com/xiaoxuan6/tools/translation"
 	"os"
 )
 

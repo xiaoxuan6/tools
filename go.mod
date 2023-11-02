@@ -1,4 +1,4 @@
-module githug.com/xiaoxuan6/tools
+module github.com/xiaoxuan6/tools
 
 go 1.18
 

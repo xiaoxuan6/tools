@@ -7,6 +7,7 @@ import (
 	"github.com/atotto/clipboard"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"strings"
 )
 
 func Action(c *cli.Context) error {
@@ -23,13 +24,13 @@ func Action(c *cli.Context) error {
 		return err
 	}
 
-	fmt.Println(color.GreenString("翻译结果："), response.(map[string]interface{})["data"])
+	fmt.Println(color.GreenString("翻译结果："), strings.TrimSpace(response.(map[string]interface{})["data"].(string)))
 	return nil
 }
 
 func setContent() string {
 	content, _ := clipboard.ReadAll()
-	fmt.Println(color.RedString("翻译内容："), content)
+	fmt.Println(color.RedString("翻译内容："), strings.TrimSpace(content))
 	return content
 }
 
