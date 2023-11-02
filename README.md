@@ -31,6 +31,6 @@ cat "test.txt" | tools q -s
 ### scan
 
 ```bash
- 开发中……
+tools q -f "qrcode.png"
  ```
 

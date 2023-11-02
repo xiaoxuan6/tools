@@ -28,12 +28,16 @@ func Action(c *cli.Context) error {
 
 	filename := c.String("filename")
 	if filename != "" {
-		b, err := ioutil.ReadFile(filename)
+		f, err := os.Open(filename)
 		if err != nil {
-			return fmt.Errorf(color.RedString("读取文件失败，请重新输入"))
+			return fmt.Errorf(color.RedString("文件 %s 不存在，请重新选择文件", filename))
 		}
 
-		scan(b)
+		defer func() {
+			_ = f.Close()
+		}()
+
+		scan(f)
 		return nil
 	}
 
@@ -49,9 +53,16 @@ func Action(c *cli.Context) error {
 			return fmt.Errorf(color.RedString("读取内容失败，请重新输入"))
 		}
 
-		scan(b)
+		f, _ := os.Create("qrcode.png")
+		_, _ = f.Write(b)
+		defer func() {
+			_ = f.Close()
+		}()
+
+		scan(f)
 		return nil
 	}
 
+	fmt.Println(color.RedString("参数错误，请重新输入: qrcode --help/q -h"))
 	return nil
 }

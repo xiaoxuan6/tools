@@ -65,7 +65,7 @@ func Flags() []cli.Flag {
 
 func identify(ext string) bool {
 	stat := false
-	extAllow := []string{"jpg", "jpeg", "png"}
+	extAllow := []string{".jpg", ".jpeg", ".png"}
 	for _, v := range extAllow {
 		if ext == v {
 			stat = true
