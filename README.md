@@ -11,8 +11,8 @@ go install github.com/xiaoxuan6/tools@install
 ```bash
 tools t -c "test"
 or 
-echo "test" | go run main.go t -s
-cat "test.txt" | go run main.go t -s
+echo "test" | tools t -s
+cat "test.txt" | tools t -s
 or
 tools t -f "a.txt"
 ```
@@ -24,8 +24,8 @@ tools t -f "a.txt"
 ```bash
 tools q -c "test"
 or 
-echo "test" | go run main.go q -s
-cat "test.txt" | go run main.go q -s
+echo "test" | tools q -s
+cat "test.txt" | tools q -s
 ```
 
 ### scan
