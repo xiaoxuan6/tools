@@ -1,15 +1,11 @@
 package ocr
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/tidwall/gjson"
 	"github.com/urfave/cli/v2"
-	"io"
-	"io/ioutil"
-	"mime/multipart"
-	"net/http"
+	"github.com/xiaoxuan6/tools/common"
 	"os"
 	"path/filepath"
 	"strings"
@@ -28,28 +24,12 @@ func Action(c *cli.Context) error {
 		filename = filepath.Join(dir, filename)
 	}
 
-	bodyBuf := &bytes.Buffer{}
-	bodyWriter := multipart.NewWriter(bodyBuf)
-	fileWriter, err := bodyWriter.CreateFormFile("file", filename)
+	response, err := common.PostWithMultipart("https://api.toolnb.com/api/ocr.html", "file", filename, file)
 	if err != nil {
-		return fmt.Errorf("创建文件失败")
+		return fmt.Errorf(color.RedString(err.Error()))
 	}
 
-	_, _ = io.Copy(fileWriter, file)
-	contentType := bodyWriter.FormDataContentType()
-	_ = bodyWriter.Close()
-
-	response, err := http.Post("https://api.toolnb.com/api/ocr.html", contentType, bodyBuf)
-	if err != nil {
-		return fmt.Errorf("请求失败，请重新输入")
-	}
-	defer response.Body.Close()
-
-	b, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return fmt.Errorf("读取响应失败")
-	}
-	result := gjson.ParseBytes(b)
+	result := gjson.ParseBytes(response)
 	if result.Get("code").Int() != 1 {
 		return fmt.Errorf(result.Get("msg").String())
 	}
