@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/tools/clipboard2img"
 	"github.com/xiaoxuan6/tools/ocr"
 	"github.com/xiaoxuan6/tools/qrcode"
 	"github.com/xiaoxuan6/tools/translation"
@@ -16,24 +17,30 @@ func main() {
 		Commands: []*cli.Command{
 			{
 				Name:    "translation",
-				Usage:   "translation",
+				Usage:   "translation 翻译",
 				Aliases: []string{"t"},
 				Flags:   translation.Flags(),
 				Action:  translation.Action,
 			},
 			{
 				Name:    "qrcode",
-				Usage:   "qrcode",
+				Usage:   "qrcode 二维码生成、解析",
 				Aliases: []string{"q"},
 				Flags:   qrcode.Flags(),
 				Action:  qrcode.Action,
 			},
 			{
 				Name:    "ocr",
-				Usage:   "ocr",
+				Usage:   "ocr 图片识别文字",
 				Aliases: []string{"o"},
 				Flags:   ocr.Flags(),
 				Action:  ocr.Action,
+			},
+			{
+				Name:    "clipboard2img",
+				Usage:   "clipboard2img 粘贴板图片保存到本地",
+				Aliases: []string{"c2i"},
+				Action:  clipboard2img.Action,
 			},
 		},
 	}
