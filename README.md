@@ -2,9 +2,13 @@
 
 # Install
 
+通过 `cmd` 安装
+
 ```bash
 go install github.com/xiaoxuan6/tools@latest
 ```     
+
+通过安装包安装，需要添加到环境变量中，[下载地址](https://github.com/xiaoxuan6/tools/releases)
 
 ## 翻译
 
