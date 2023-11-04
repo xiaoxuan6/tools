@@ -6,7 +6,6 @@ import (
 	"github.com/abadojack/whatlanggo"
 	"github.com/atotto/clipboard"
 	"github.com/fatih/color"
-	"github.com/sqweek/dialog"
 	"github.com/urfave/cli/v2"
 	"io/ioutil"
 	"os"
@@ -14,33 +13,15 @@ import (
 )
 
 func Action(c *cli.Context) error {
-	var content string
-	filename := c.String("filename")
-	if filename != "" {
-		if _, err := os.Stat(filename); os.IsNotExist(err) {
-		SetFilename:
-			fmt.Println(color.RedString("文件不存在，请重新选择文件"))
-			filename = setFilename()
+	content := c.String("content")
+	if len(content) < 1 {
+		stdin := c.Bool("stdin")
+		content = setContent(stdin)
+	}
 
-			if filename == "" {
-				goto SetFilename
-			}
-
-			f, _ := os.Stat(filename)
-			fileSize := f.Size()
-			fileSizeInMB := float64(fileSize) / (1024 * 1024)
-			if fileSizeInMB > 1 {
-				return fmt.Errorf(color.RedString("文件大小超过 1MB，无法翻译"))
-			}
-
-			content = fileGetContent(filename)
-		}
-	} else {
-		content = c.String("content")
-		if len(content) < 1 {
-			stdin := c.Bool("stdin")
-			content = setContent(stdin)
-		}
+	if len(content) < 1 {
+		fmt.Println(color.RedString("翻译内容不能为空"))
+		return nil
 	}
 
 	info := whatlanggo.Detect(content)
@@ -55,27 +36,8 @@ func Action(c *cli.Context) error {
 	return nil
 }
 
-func setFilename() string {
-	filename, err := dialog.File().Filter("txt file", "txt").Title("选择文件").Load()
-	if err != nil {
-		return ""
-	}
-
-	return filename
-}
-
-func fileGetContent(filename string) string {
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return ""
-	}
-
-	fmt.Println(color.RedString("翻译文件："), filename)
-	return string(f)
-}
-
 func setContent(stdin bool) string {
-	if stdin {
+	if stdin != false {
 		b, err := ioutil.ReadAll(os.Stdin)
 		if err != nil {
 			return ""

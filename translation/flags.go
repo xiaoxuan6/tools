@@ -16,11 +16,6 @@ func Flags() (flags []cli.Flag) {
 			Aliases: []string{"s"},
 			Usage:   "read from stdin",
 		},
-		&cli.StringFlag{
-			Name:    "filename",
-			Aliases: []string{"f"},
-			Usage:   "translation filename",
-		},
 	}
 	return
 }

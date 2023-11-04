@@ -17,8 +17,6 @@ tools t -c "test"
 or 
 echo "test" | tools t -s
 cat "test.txt" | tools t -s
-or
-tools t -f "a.txt"
 ```
 
 ## qrcode
