@@ -34,3 +34,12 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
+    files:
+      - none*
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^Merge'
