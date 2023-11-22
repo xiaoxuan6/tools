@@ -3,3 +3,4 @@ translate/*
 qrcode.png
 *.jpg
 dist/
+caddy/

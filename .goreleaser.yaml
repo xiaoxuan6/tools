@@ -33,7 +33,7 @@ archives:
       {{- if .Arm }}v{{ .Arm }}{{ end }}
     format_overrides:
       - goos: windows
-        format: zip
+        format: binary
     files:
       - none*
 
