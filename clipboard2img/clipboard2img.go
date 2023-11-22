@@ -10,10 +10,15 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 	"time"
 )
 
 func Action(c *cli.Context) error {
+	if runtime.GOOS != "Windows" {
+		return fmt.Errorf(color.RedString("当前系统不支持该命令, 仅支持 Windows 系统"))
+	}
+
 	err := clipboard.Init()
 	if err != nil {
 		return fmt.Errorf(color.RedString("clipboard init error: %w", err))
