@@ -9,7 +9,7 @@ import (
 )
 
 func Flags() []cli.Flag {
-	flags := []cli.Flag{
+	return []cli.Flag{
 		&cli.StringFlag{
 			Name:    "filename",
 			Aliases: []string{"f"},
@@ -28,6 +28,4 @@ func Flags() []cli.Flag {
 			},
 		},
 	}
-
-	return flags
 }

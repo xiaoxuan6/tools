@@ -10,7 +10,7 @@ import (
 )
 
 func Flags() []cli.Flag {
-	flags := []cli.Flag{
+	return []cli.Flag{
 		&cli.StringFlag{
 			Name:    "content",
 			Aliases: []string{"c"},
@@ -57,6 +57,4 @@ func Flags() []cli.Flag {
 			},
 		},
 	}
-
-	return flags
 }

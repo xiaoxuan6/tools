@@ -5,7 +5,7 @@ import (
 )
 
 func Flags() (flags []cli.Flag) {
-	flags = []cli.Flag{
+	return []cli.Flag{
 		&cli.StringFlag{
 			Name:    "content",
 			Aliases: []string{"c"},
@@ -17,5 +17,4 @@ func Flags() (flags []cli.Flag) {
 			Usage:   "read from stdin",
 		},
 	}
-	return
 }

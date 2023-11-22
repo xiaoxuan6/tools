@@ -5,6 +5,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"github.com/xiaoxuan6/tools/clipboard2img"
+	"github.com/xiaoxuan6/tools/host"
 	"github.com/xiaoxuan6/tools/ocr"
 	"github.com/xiaoxuan6/tools/qrcode"
 	"github.com/xiaoxuan6/tools/translation"
@@ -55,6 +56,13 @@ func main() {
 					fmt.Println("tools version:", color.GreenString(Version))
 					return nil
 				},
+			},
+			{
+				Name:    "host",
+				Usage:   "host host文件操作",
+				Aliases: []string{"h"},
+				Flags:   host.Flags(),
+				Action:  host.Action,
 			},
 		},
 	}
