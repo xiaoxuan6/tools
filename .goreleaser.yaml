@@ -54,3 +54,13 @@ changelog:
     - title: 'Others'
       regexp: '^chore|^refactor|^style|^ci|^perf'
       order: 2
+
+#https://goreleaser.com/customization/homebrew/?h=brews
+brews:
+  - tap:
+      owner: 'xiaoxuan6'
+      name: 'tools'
+    homepage: 'https://godoc.org/github.com/xiaoxuan6/tools'
+    description: 'tools - 小工具翻译、OCR 图片识别文字、二维码生成/解析等'
+    test: |
+      system "#{bin}/tools -h"
