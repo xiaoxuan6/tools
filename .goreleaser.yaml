@@ -11,7 +11,7 @@ builds:
   - env:
       - CGO_ENABLED=0
     ldflags:
-      - -s -w -X main.version=v{{.Version}}
+      - -s -w -X main.version=v{{ .Version }}
     goos:
       - windows
       - linux
@@ -43,29 +43,25 @@ archives:
       - none*
 
 changelog:
-  sort: asc
+  sort: desc
   filters:
     exclude:
       - '^docs:'
       - '^Merge'
       - '^test'
   groups:
-    - title: 'Features'
+    - title: '🚀 Features'
       regexp: '^feat:'
-      order: 0
-    - title: 'Bug Fixes'
+    - title: '🐛 Bug Fixes'
       regexp: '^fix:'
-      order: 1
-    - title: 'Others'
+    - title: '🔨 Others'
       regexp: '^chore|^refactor|^style|^ci|^perf'
-      order: 2
 
-#https://goreleaser.com/customization/homebrew/?h=brews
 brews:
   - tap:
       owner: 'xiaoxuan6'
       name: 'tools'
-    homepage: 'https://godoc.org/github.com/xiaoxuan6/tools'
+    homepage: 'https://github.com/xiaoxuan6/tools'
     description: 'tools - 小工具翻译、OCR 图片识别文字、二维码生成/解析等'
     test: |
       system "#{bin}/tools -h"
