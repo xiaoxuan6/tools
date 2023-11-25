@@ -4,3 +4,4 @@ qrcode.png
 *.jpg
 dist/
 caddy/
+bookmarks.json

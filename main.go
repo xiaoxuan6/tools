@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/tools/bookmarks"
 	"github.com/xiaoxuan6/tools/clipboard2img"
 	"github.com/xiaoxuan6/tools/host"
 	"github.com/xiaoxuan6/tools/ocr"
@@ -12,9 +13,7 @@ import (
 	"os"
 )
 
-var (
-	Version string
-)
+var version string
 
 func main() {
 	app := cli.App{
@@ -25,21 +24,21 @@ func main() {
 				Name:    "translation",
 				Usage:   "translation 翻译",
 				Aliases: []string{"t"},
-				Flags:   translation.Flags(),
+				Flags:   translation.Flags,
 				Action:  translation.Action,
 			},
 			{
 				Name:    "qrcode",
 				Usage:   "qrcode 二维码生成、解析",
 				Aliases: []string{"q"},
-				Flags:   qrcode.Flags(),
+				Flags:   qrcode.Flags,
 				Action:  qrcode.Action,
 			},
 			{
 				Name:    "ocr",
 				Usage:   "ocr 图片识别文字",
 				Aliases: []string{"o"},
-				Flags:   ocr.Flags(),
+				Flags:   ocr.Flags,
 				Action:  ocr.Action,
 			},
 			{
@@ -53,7 +52,7 @@ func main() {
 				Usage:   "version 版本号",
 				Aliases: []string{"v"},
 				Action: func(c *cli.Context) error {
-					fmt.Println("tools version:", color.GreenString(Version))
+					fmt.Println("tools version:", color.GreenString(version))
 					return nil
 				},
 			},
@@ -61,8 +60,15 @@ func main() {
 				Name:    "host",
 				Usage:   "host host文件操作",
 				Aliases: []string{"h"},
-				Flags:   host.Flags(),
+				Flags:   host.Flags,
 				Action:  host.Action,
+			},
+			{
+				Name:    "bookmarks",
+				Usage:   "bookmarks 将书签导出到文件中",
+				Aliases: []string{"b"},
+				Flags:   bookmarks.Flags,
+				Action:  bookmarks.Action,
 			},
 		},
 	}
