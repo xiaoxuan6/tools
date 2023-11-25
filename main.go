@@ -13,7 +13,7 @@ import (
 	"os"
 )
 
-var version string
+var Version string
 
 func main() {
 	app := cli.App{
@@ -52,7 +52,7 @@ func main() {
 				Usage:   "version 版本号",
 				Aliases: []string{"v"},
 				Action: func(c *cli.Context) error {
-					fmt.Println("tools version:", color.GreenString(version))
+					fmt.Println("tools version:", color.GreenString(Version))
 					return nil
 				},
 			},
