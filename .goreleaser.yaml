@@ -10,6 +10,8 @@ before:
 builds:
   - env:
       - CGO_ENABLED=0
+    flags:
+      - -trimpath
     ldflags:
       - -s -w -X main.Version=v{{ .Version }}
     goos:
@@ -51,17 +53,8 @@ changelog:
       - '^test'
   groups:
     - title: '🚀 Features'
-      regexp: '^feat:'
+      regexp: 'feat:'
     - title: '🐛 Bug Fixes'
-      regexp: '^fix:'
+      regexp: 'fix:'
     - title: '🔨 Others'
-      regexp: '^chore|^refactor|^style|^ci|^perf'
 
-brews:
-  - tap:
-      owner: 'xiaoxuan6'
-      name: 'tools'
-    homepage: 'https://github.com/xiaoxuan6/tools'
-    description: 'tools - 小工具翻译、OCR 图片识别文字、二维码生成/解析等'
-    test: |
-      system "#{bin}/tools -h"
