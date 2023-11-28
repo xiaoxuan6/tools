@@ -8,13 +8,6 @@
 go install github.com/xiaoxuan6/tools@latest
 ```     
 
-### Homebrew (Mac)
-
-```bash
-brew tap xiaoxuan6/tools
-brew install tools
-```
-
 ### 安装包
 
 [tools 下载地址](https://github.com/xiaoxuan6/tools/releases)
