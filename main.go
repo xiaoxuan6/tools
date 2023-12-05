@@ -6,6 +6,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"github.com/xiaoxuan6/tools/bookmarks"
 	"github.com/xiaoxuan6/tools/clipboard2img"
+	"github.com/xiaoxuan6/tools/code"
 	"github.com/xiaoxuan6/tools/host"
 	"github.com/xiaoxuan6/tools/ocr"
 	"github.com/xiaoxuan6/tools/qrcode"
@@ -58,7 +59,7 @@ func main() {
 			},
 			{
 				Name:    "host",
-				Usage:   "host host文件操作",
+				Usage:   "host 文件操作",
 				Aliases: []string{"h"},
 				Flags:   host.Flags,
 				Action:  host.Action,
@@ -69,6 +70,12 @@ func main() {
 				Aliases: []string{"b"},
 				Flags:   bookmarks.Flags,
 				Action:  bookmarks.Action,
+			},
+			{
+				Name:    "code",
+				Usage:   "code 人工智能来解释您不理解的任何代码的工具",
+				Aliases: []string{"c"},
+				Action:  code.Action,
 			},
 		},
 	}
