@@ -58,9 +58,9 @@ func main() {
 				},
 			},
 			{
-				Name:    "host",
-				Usage:   "host 文件操作",
-				Aliases: []string{"h"},
+				Name:    "localhost",
+				Usage:   "localhost 文件操作",
+				Aliases: []string{"l"},
 				Flags:   host.Flags,
 				Action:  host.Action,
 			},
