@@ -15,10 +15,22 @@ import (
 	"runtime"
 )
 
-var typeMap = map[string]string{
-	"chrome":  "",
-	"firefox": "",
-}
+var (
+	Db *gorm.DB
+
+	typeMap = map[string]string{
+		"chrome":  "",
+		"firefox": "",
+	}
+
+	Command = &cli.Command{
+		Name:    "bookmarks",
+		Usage:   "bookmarks 将书签导出到文件中",
+		Aliases: []string{"b"},
+		Flags:   Flags,
+		Action:  Action,
+	}
+)
 
 type (
 	BookmarkRoot struct {
@@ -135,8 +147,6 @@ func getFirefoxBookmarks() string {
 
 	return bookmarks
 }
-
-var Db *gorm.DB
 
 func initDb(dsn string) {
 	db, err := gorm.Open(sqlite.Open(dsn))

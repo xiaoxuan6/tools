@@ -21,33 +21,13 @@ func main() {
 		Name:  "tools",
 		Usage: "tools",
 		Commands: []*cli.Command{
-			{
-				Name:    "translation",
-				Usage:   "translation 翻译",
-				Aliases: []string{"t"},
-				Flags:   translation.Flags,
-				Action:  translation.Action,
-			},
-			{
-				Name:    "qrcode",
-				Usage:   "qrcode 二维码生成、解析",
-				Aliases: []string{"q"},
-				Flags:   qrcode.Flags,
-				Action:  qrcode.Action,
-			},
-			{
-				Name:    "ocr",
-				Usage:   "ocr 图片识别文字",
-				Aliases: []string{"o"},
-				Flags:   ocr.Flags,
-				Action:  ocr.Action,
-			},
-			{
-				Name:    "clipboard2img",
-				Usage:   "clipboard2img 粘贴板图片保存到本地",
-				Aliases: []string{"c2i"},
-				Action:  clipboard2img.Action,
-			},
+			bookmarks.Command,
+			code.Command,
+			clipboard2img.Command,
+			host.Command,
+			translation.Command,
+			qrcode.Command,
+			ocr.Command,
 			{
 				Name:    "version",
 				Usage:   "version 版本号",
@@ -56,26 +36,6 @@ func main() {
 					fmt.Println("tools version:", color.GreenString(Version))
 					return nil
 				},
-			},
-			{
-				Name:    "localhost",
-				Usage:   "localhost 文件操作",
-				Aliases: []string{"l"},
-				Flags:   host.Flags,
-				Action:  host.Action,
-			},
-			{
-				Name:    "bookmarks",
-				Usage:   "bookmarks 将书签导出到文件中",
-				Aliases: []string{"b"},
-				Flags:   bookmarks.Flags,
-				Action:  bookmarks.Action,
-			},
-			{
-				Name:    "code",
-				Usage:   "code 人工智能来解释您不理解的任何代码的工具",
-				Aliases: []string{"c"},
-				Action:  code.Action,
 			},
 		},
 	}

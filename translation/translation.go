@@ -12,6 +12,14 @@ import (
 	"strings"
 )
 
+var Command = &cli.Command{
+	Name:    "translation",
+	Usage:   "translation 翻译",
+	Aliases: []string{"t"},
+	Flags:   Flags,
+	Action:  Action,
+}
+
 func Action(c *cli.Context) error {
 	content := c.String("content")
 	if len(content) < 1 {

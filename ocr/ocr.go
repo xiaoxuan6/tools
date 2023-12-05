@@ -11,6 +11,14 @@ import (
 	"strings"
 )
 
+var Command = &cli.Command{
+	Name:    "ocr",
+	Usage:   "ocr 图片识别文字",
+	Aliases: []string{"o"},
+	Flags:   Flags,
+	Action:  Action,
+}
+
 func Action(c *cli.Context) error {
 	filename := c.String("filename")
 	file, err := os.Open(filename)

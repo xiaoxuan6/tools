@@ -14,6 +14,13 @@ import (
 	"time"
 )
 
+var Command = &cli.Command{
+	Name:    "clipboard2img",
+	Usage:   "clipboard2img 粘贴板图片保存到本地",
+	Aliases: []string{"c2i"},
+	Action:  Action,
+}
+
 func Action(c *cli.Context) error {
 	if runtime.GOOS != "Windows" {
 		return fmt.Errorf(color.RedString("当前系统不支持该命令, 仅支持 Windows 系统"))

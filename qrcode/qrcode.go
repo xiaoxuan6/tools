@@ -9,6 +9,14 @@ import (
 	"os"
 )
 
+var Command = &cli.Command{
+	Name:    "qrcode",
+	Usage:   "qrcode 二维码生成、解析",
+	Aliases: []string{"q"},
+	Flags:   Flags,
+	Action:  Action,
+}
+
 func Action(c *cli.Context) error {
 	content := c.String("content")
 	stdin := c.Bool("stdin")

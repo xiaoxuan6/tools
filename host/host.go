@@ -11,7 +11,17 @@ import (
 	"strings"
 )
 
-var path = filepath.Join(os.Getenv("windir"), "System32\\drivers\\etc\\hosts")
+var (
+	path = filepath.Join(os.Getenv("windir"), "System32\\drivers\\etc\\hosts")
+
+	Command = &cli.Command{
+		Name:    "localhost",
+		Usage:   "localhost 文件操作",
+		Aliases: []string{"l"},
+		Flags:   Flags,
+		Action:  Action,
+	}
+)
 
 func Action(c *cli.Context) error {
 	if runtime.GOOS != "Windows" {
