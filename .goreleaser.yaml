@@ -44,6 +44,10 @@ archives:
     files:
       - none*
 
+release:
+  footer: |
+    Full Changelog: [{{ .PreviousTag }}...{{ .Tag }}](https://{{ .ModulePath }}/compare/{{ .PreviousTag }}...{{ .Tag }})
+
 changelog:
   sort: desc
   filters:

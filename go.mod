@@ -3,12 +3,12 @@ module github.com/xiaoxuan6/tools
 go 1.18
 
 require (
+	github.com/Baozisoftware/qrcode-terminal-go v0.0.0-20170407111555-c0650d8dff0f
 	github.com/OwO-Network/gdeeplx v0.0.1
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/atotto/clipboard v0.1.4
 	github.com/fatih/color v1.15.0
 	github.com/glebarez/sqlite v1.10.0
-	github.com/mdp/qrterminal v1.0.1
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/tidwall/gjson v1.14.4
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
@@ -30,6 +30,7 @@ require (
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
