@@ -7,6 +7,7 @@ import (
 	"github.com/atotto/clipboard"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/tools/common"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -30,7 +31,6 @@ func Action(c *cli.Context) error {
 	text = strings.ReplaceAll(strings.TrimSpace(text), `"`, `\"`)
 	re := regexp.MustCompile(`(\r\n|\r|\n)`)
 	text = re.ReplaceAllString(text, "\\n\\t")
-	// 匹配换行符后的空格，然后替换为"\n\t"
 	re = regexp.MustCompile(`\\n\\t[ \t]*`)
 	text = re.ReplaceAllString(text, "\\n\\t")
 
@@ -38,6 +38,7 @@ func Action(c *cli.Context) error {
 		return fmt.Errorf(color.RedString("请复制您需要解释的代码，再执行该操作"))
 	}
 
+	common.Start()
 	var body bytes.Buffer
 	body.WriteString(fmt.Sprintf(`{"code":"%s"}`, text))
 	res, err := http.Post("https://whatdoesthiscodedo.com/api/stream-text", "application/json", &body)
@@ -49,6 +50,7 @@ func Action(c *cli.Context) error {
 		return fmt.Errorf(color.RedString("请求失败：%s", res.Status))
 	}
 
+	common.Stop()
 	b, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		return fmt.Errorf(color.RedString("读取响应失败：%s", err.Error()))
@@ -59,6 +61,7 @@ func Action(c *cli.Context) error {
 	if err != nil {
 		return fmt.Errorf(color.RedString("翻译失败：%s", err.Error()))
 	}
+
 	fmt.Println(color.GreenString("解释：%s", strings.TrimSpace(targetResponse.(map[string]interface{})["data"].(string))))
 	return nil
 }

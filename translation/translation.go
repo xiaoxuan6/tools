@@ -7,6 +7,7 @@ import (
 	"github.com/atotto/clipboard"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/tools/common"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -32,10 +33,12 @@ func Action(c *cli.Context) error {
 		return nil
 	}
 
+	common.Start()
 	info := whatlanggo.Detect(content)
 	lang := info.Lang.String()
 	language := setLanguage(lang)
 	response, err := gdeeplx.Translate(content, lang, language, 0)
+	common.Stop()
 	if err != nil {
 		return err
 	}

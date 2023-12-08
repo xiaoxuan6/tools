@@ -32,11 +32,13 @@ func Action(c *cli.Context) error {
 		filename = filepath.Join(dir, filename)
 	}
 
+	common.Start()
 	response, err := common.PostWithMultipart("https://api.toolnb.com/api/ocr.html", "file", filename, file)
 	if err != nil {
 		return fmt.Errorf(color.RedString(err.Error()))
 	}
 
+	common.Stop()
 	result := gjson.ParseBytes(response)
 	if result.Get("code").Int() != 1 {
 		return fmt.Errorf(result.Get("msg").String())

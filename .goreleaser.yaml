@@ -13,7 +13,7 @@ builds:
     flags:
       - -trimpath
     ldflags:
-      - -s -w -X main.Version=v{{ .Version }}
+      - -s -w -X main.Version={{ .Tag }}
     goos:
       - windows
       - linux
