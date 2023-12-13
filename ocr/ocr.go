@@ -32,7 +32,7 @@ func Action(c *cli.Context) error {
 		filename = filepath.Join(dir, filename)
 	}
 
-	common.Start()
+	common.Start("ocr ")
 	response, err := common.PostWithMultipart("https://api.toolnb.com/api/ocr.html", "file", filename, file)
 	if err != nil {
 		return fmt.Errorf(color.RedString(err.Error()))

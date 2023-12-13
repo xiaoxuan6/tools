@@ -7,8 +7,8 @@ import (
 
 var s = spinner.New(spinner.CharSets[0], 10*time.Millisecond)
 
-func Start() {
-	s.Prefix = "doing..."
+func Start(prefix string) {
+	s.Prefix = prefix + "doing..."
 	s.Start()
 }
 

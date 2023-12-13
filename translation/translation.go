@@ -33,7 +33,7 @@ func Action(c *cli.Context) error {
 		return nil
 	}
 
-	common.Start()
+	common.Start("translations ")
 	info := whatlanggo.Detect(content)
 	lang := info.Lang.String()
 	language := setLanguage(lang)

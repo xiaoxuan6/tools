@@ -38,7 +38,7 @@ func Action(c *cli.Context) error {
 		return fmt.Errorf(color.RedString("请复制您需要解释的代码，再执行该操作"))
 	}
 
-	common.Start()
+	common.Start("code ")
 	var body bytes.Buffer
 	body.WriteString(fmt.Sprintf(`{"code":"%s"}`, text))
 	res, err := http.Post("https://whatdoesthiscodedo.com/api/stream-text", "application/json", &body)
