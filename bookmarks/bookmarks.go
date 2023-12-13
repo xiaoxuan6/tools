@@ -18,9 +18,10 @@ import (
 var (
 	Db *gorm.DB
 
-	typeMap = map[string]string{
+	browsers = map[string]string{
 		"chrome":  "",
 		"firefox": "",
+		"edge":    "",
 	}
 
 	Command = &cli.Command{
@@ -52,16 +53,37 @@ type (
 )
 
 func Action(c *cli.Context) error {
-	if _, ok := typeMap[c.String("type")]; !ok {
-		return fmt.Errorf(color.RedString("不支持的书签类型"))
+	browser := c.String("browser")
+	if _, ok := browsers[browser]; !ok {
+		return fmt.Errorf(color.RedString("不支持该浏览器"))
 	}
 
-	f, _ := os.Create("bookmarks.json")
+	filename := fmt.Sprintf("%s_bookmarks.json", browser)
+	f, _ := os.Create(filename)
 	defer f.Close()
 
-	switch c.String("type") {
+	switch browser {
 	case "chrome":
 		bookmarks := getChromeBookmarks()
+		if len(bookmarks) == 0 {
+			return fmt.Errorf(color.RedString("未找到书签文件"))
+		}
+
+		b, err := ioutil.ReadFile(bookmarks)
+		if err != nil {
+			return fmt.Errorf(color.RedString("读取书签文件失败：%w", err))
+		}
+
+		var bookmarkRoot BookmarkRoot
+		if err = json.Unmarshal(b, &bookmarkRoot); err != nil {
+			return fmt.Errorf(color.RedString("解析书签文件失败：%w", err))
+		}
+
+		b, _ = json.Marshal(bookmarkRoot.Roots.BookmarkBar)
+		_, _ = f.Write(b)
+
+	case "edge":
+		bookmarks := getEdgeBookmarks()
 		if len(bookmarks) == 0 {
 			return fmt.Errorf(color.RedString("未找到书签文件"))
 		}
@@ -104,7 +126,7 @@ func Action(c *cli.Context) error {
 		_, _ = f.Write(b)
 	}
 
-	fmt.Println(color.GreenString("书签文件已导出到当前目录下的 bookmarks.json 文件中"))
+	fmt.Println(color.GreenString("书签文件已导出到当前目录下的 %s 文件中", filename))
 	return nil
 
 }
@@ -119,6 +141,19 @@ func getChromeBookmarks() string {
 		return bookmarks
 	case "linux":
 		bookmarks, _ := homedir.Expand("~/.config/google-chrome/Default/Bookmarks")
+		return bookmarks
+	default:
+		return ""
+	}
+}
+
+func getEdgeBookmarks() string {
+	switch runtime.GOOS {
+	case "windows":
+		bookmarks, _ := homedir.Expand("~/AppData/Local/Microsoft/Edge/User Data/Default/Bookmarks")
+		return bookmarks
+	case "darwin":
+		bookmarks, _ := homedir.Expand("~/Library/Application Support/Microsoft Edge/Default/Bookmarks")
 		return bookmarks
 	default:
 		return ""
