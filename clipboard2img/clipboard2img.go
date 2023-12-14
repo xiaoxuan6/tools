@@ -16,7 +16,7 @@ import (
 
 var Command = &cli.Command{
 	Name:    "clipboard2img",
-	Usage:   "clipboard2img 粘贴板图片保存到本地",
+	Usage:   "粘贴板图片保存到本地",
 	Aliases: []string{"c2i"},
 	Action:  Action,
 }

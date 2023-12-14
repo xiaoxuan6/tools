@@ -13,7 +13,7 @@ import (
 
 var Command = &cli.Command{
 	Name:    "ocr",
-	Usage:   "ocr 图片识别文字",
+	Usage:   "图片识别文字",
 	Aliases: []string{"o"},
 	Flags:   Flags,
 	Action:  Action,

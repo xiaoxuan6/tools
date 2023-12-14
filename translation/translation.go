@@ -15,7 +15,7 @@ import (
 
 var Command = &cli.Command{
 	Name:    "translation",
-	Usage:   "translation 翻译",
+	Usage:   "翻译",
 	Aliases: []string{"t"},
 	Flags:   Flags,
 	Action:  Action,

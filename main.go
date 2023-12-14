@@ -30,7 +30,7 @@ func main() {
 			ocr.Command,
 			{
 				Name:    "version",
-				Usage:   "version 版本号",
+				Usage:   "版本号",
 				Aliases: []string{"v"},
 				Action: func(c *cli.Context) error {
 					fmt.Println("tools version:", color.GreenString(Version))

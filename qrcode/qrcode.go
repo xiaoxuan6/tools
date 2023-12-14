@@ -11,7 +11,7 @@ import (
 
 var Command = &cli.Command{
 	Name:    "qrcode",
-	Usage:   "qrcode 二维码生成、解析",
+	Usage:   "二维码生成、解析",
 	Aliases: []string{"q"},
 	Flags:   Flags,
 	Action:  Action,

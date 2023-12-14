@@ -16,7 +16,7 @@ var (
 
 	Command = &cli.Command{
 		Name:    "localhost",
-		Usage:   "localhost 文件操作",
+		Usage:   "host 文件操作",
 		Aliases: []string{"l"},
 		Flags:   Flags,
 		Action:  Action,

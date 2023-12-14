@@ -16,7 +16,7 @@ import (
 
 var Command = &cli.Command{
 	Name:    "code",
-	Usage:   "code 人工智能来解释您不理解的任何代码的工具",
+	Usage:   "人工智能来解释您不理解的任何代码的工具",
 	Aliases: []string{"c"},
 	Action:  Action,
 }

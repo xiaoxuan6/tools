@@ -26,7 +26,7 @@ var (
 
 	Command = &cli.Command{
 		Name:    "bookmarks",
-		Usage:   "bookmarks 将书签导出到文件中",
+		Usage:   "将书签导出到文件中",
 		Aliases: []string{"b"},
 		Flags:   Flags,
 		Action:  Action,
