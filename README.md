@@ -18,9 +18,9 @@ go install github.com/xiaoxuan6/tools@latest
 
 ```bash
 tools t -c "test"
-or 
-echo "test" | tools t -s
-cat "test.txt" | tools t -s
+echo "test" | tools t
+cat "test.txt" | tools t
+tools t < .gitignore
 ```
 
 ### 二维码
@@ -29,9 +29,8 @@ cat "test.txt" | tools t -s
 
 ```bash
 tools q -c "test"
-or 
-echo "test" | tools q -s
-cat "test.txt" | tools q -s
+echo "test" | tools q 
+cat "test.txt" | tools q
 ```
 
 #### scan

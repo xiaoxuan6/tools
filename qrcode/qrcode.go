@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/tools/common"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -18,16 +19,9 @@ var Command = &cli.Command{
 }
 
 func Action(c *cli.Context) error {
-	content := c.String("content")
-	stdin := c.Bool("stdin")
-
-	if len(content) < 1 && stdin {
-		b, err := ioutil.ReadAll(os.Stdin)
-		if err != nil {
-			return fmt.Errorf(color.RedString("读取内容失败，请重新输入"))
-		}
-		content = string(b)
-	}
+	content := common.ScannerF(func() string {
+		return c.String("content")
+	})
 
 	if len(content) > 0 {
 		generateQrcode(content)

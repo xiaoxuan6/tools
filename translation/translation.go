@@ -8,8 +8,6 @@ import (
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"github.com/xiaoxuan6/tools/common"
-	"io/ioutil"
-	"os"
 	"strings"
 )
 
@@ -24,8 +22,10 @@ var Command = &cli.Command{
 func Action(c *cli.Context) error {
 	content := c.String("content")
 	if len(content) < 1 {
-		stdin := c.Bool("stdin")
-		content = setContent(stdin)
+		content = common.ScannerF(func() string {
+			body, _ := clipboard.ReadAll()
+			return strings.TrimSpace(body)
+		})
 	}
 
 	if len(content) < 1 {
@@ -34,6 +34,7 @@ func Action(c *cli.Context) error {
 	}
 
 	common.Start("translations ")
+	fmt.Println(color.RedString("翻译内容："), content)
 	info := whatlanggo.Detect(content)
 	lang := info.Lang.String()
 	language := setLanguage(lang)
@@ -45,20 +46,6 @@ func Action(c *cli.Context) error {
 
 	fmt.Println(color.GreenString("翻译结果："), strings.TrimSpace(response.(map[string]interface{})["data"].(string)))
 	return nil
-}
-
-func setContent(stdin bool) string {
-	if stdin != false {
-		b, err := ioutil.ReadAll(os.Stdin)
-		if err != nil {
-			return ""
-		}
-		return string(b)
-	}
-
-	content, _ := clipboard.ReadAll()
-	fmt.Println(color.RedString("翻译内容："), strings.TrimSpace(content))
-	return content
 }
 
 func setLanguage(language string) string {

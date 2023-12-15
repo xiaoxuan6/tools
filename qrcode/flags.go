@@ -15,11 +15,6 @@ var Flags = []cli.Flag{
 		Aliases: []string{"c"},
 		Usage:   "qrcode content",
 	},
-	&cli.BoolFlag{
-		Name:    "stdin",
-		Aliases: []string{"s"},
-		Usage:   "read from stdin",
-	},
 	&cli.StringFlag{
 		Name:    "filename",
 		Aliases: []string{"f"},
