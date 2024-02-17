@@ -15,7 +15,13 @@ var Command = &cli.Command{
 	Name:    "translation",
 	Usage:   "翻译",
 	Aliases: []string{"t"},
-	Flags:   Flags,
+	Flags:   []cli.Flag{
+		&cli.StringFlag{
+			Name:    "content",
+			Aliases: []string{"c"},
+			Usage:   "translation content",
+		},
+	},
 	Action:  Action,
 }
 
@@ -33,8 +39,8 @@ func Action(c *cli.Context) error {
 		return nil
 	}
 
-	common.Start("translations ")
 	fmt.Println(color.RedString("翻译内容："), content)
+	common.Start("translations ")
 	info := whatlanggo.Detect(content)
 	lang := info.Lang.String()
 	language := setLanguage(lang)

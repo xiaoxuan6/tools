@@ -28,7 +28,14 @@ var (
 		Name:    "bookmarks",
 		Usage:   "将书签导出到文件中",
 		Aliases: []string{"b"},
-		Flags:   Flags,
+		Flags:   []cli.Flag{
+			&cli.StringFlag{
+				Name:     "browser",
+				Aliases:  []string{"b"},
+				Required: true,
+				Usage:    "支持浏览器 chrome、edge 或 firefox",
+			},
+		},
 		Action:  Action,
 	}
 )

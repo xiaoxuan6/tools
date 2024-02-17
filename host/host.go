@@ -1,10 +1,12 @@
 package host
 
 import (
+	"errors"
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"io/ioutil"
+	"net/url"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -18,8 +20,22 @@ var (
 		Name:    "localhost",
 		Usage:   "host 文件操作",
 		Aliases: []string{"l"},
-		Flags:   Flags,
-		Action:  Action,
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:     "domain",
+				Aliases:  []string{"d"},
+				Usage:    "域名",
+				Required: true,
+				Action: func(context *cli.Context, s string) error {
+					_, err := url.Parse(s)
+					if err != nil {
+						return errors.New(fmt.Sprintf("domain %s 解析失败，请重新输入", s))
+					}
+					return nil
+				},
+			},
+		},
+		Action: Action,
 	}
 )
 
