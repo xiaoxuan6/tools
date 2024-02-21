@@ -7,6 +7,7 @@ import (
 	"github.com/atotto/clipboard"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/deeplx"
 	"github.com/xiaoxuan6/tools/common"
 	"strings"
 )
@@ -15,14 +16,14 @@ var Command = &cli.Command{
 	Name:    "translation",
 	Usage:   "翻译",
 	Aliases: []string{"t"},
-	Flags:   []cli.Flag{
+	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:    "content",
 			Aliases: []string{"c"},
 			Usage:   "translation content",
 		},
 	},
-	Action:  Action,
+	Action: Action,
 }
 
 func Action(c *cli.Context) error {
@@ -41,28 +42,35 @@ func Action(c *cli.Context) error {
 
 	fmt.Println(color.RedString("翻译内容："), content)
 	common.Start("translations ")
+
 	info := whatlanggo.Detect(content)
-	lang := info.Lang.String()
-	language := setLanguage(lang)
-	response, err := gdeeplx.Translate(content, lang, language, 0)
-	common.Stop()
+	var targetLang string
+	switch info.Lang.String() {
+	case "Mandarin", "Chinese", "Zh", "zh-cn":
+		targetLang = "en"
+	case "English", "En":
+		targetLang = "zh"
+	default:
+		targetLang = ""
+	}
+
+	response, err := deeplx.Translate(content, "", targetLang)
+	num := 0
+RETRY:
 	if err != nil {
-		return err
-	}
+		result, errs := gdeeplx.Translate(content, "", targetLang, 0)
+		response = strings.TrimSpace(result.(map[string]interface{})["data"].(string))
+		err = errs
 
-	fmt.Println(color.GreenString("翻译结果："), strings.TrimSpace(response.(map[string]interface{})["data"].(string)))
+		num++
+		if num < 3 {
+			goto RETRY
+		}
+
+		response = err.Error()
+	}
+	common.Stop()
+
+	fmt.Println(color.GreenString("翻译结果："), strings.TrimSpace(response))
 	return nil
-}
-
-func setLanguage(language string) string {
-	languages := map[string]string{
-		"English":  "zh",
-		"Mandarin": "en",
-	}
-
-	if _, ok := languages[language]; ok {
-		return languages[language]
-	}
-
-	return "zh"
 }

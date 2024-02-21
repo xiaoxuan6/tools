@@ -11,15 +11,17 @@ require (
 	github.com/fatih/color v1.15.0
 	github.com/glebarez/sqlite v1.10.0
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/tidwall/gjson v1.14.4
+	github.com/tidwall/gjson v1.17.1
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
 	github.com/urfave/cli/v2 v2.25.7
+	github.com/xiaoxuan6/deeplx v0.0.0-20240221102603-23c7cca03e6d
 	golang.design/x/clipboard v0.7.0
 	gorm.io/gorm v1.25.5
 )
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
+	github.com/avast/retry-go v2.7.0+incompatible // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/glebarez/go-sqlite v1.21.2 // indirect
