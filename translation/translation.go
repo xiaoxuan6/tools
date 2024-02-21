@@ -44,8 +44,9 @@ func Action(c *cli.Context) error {
 	common.Start("translations ")
 
 	info := whatlanggo.Detect(content)
+	sourceLang := info.Lang.String()
 	var targetLang string
-	switch info.Lang.String() {
+	switch sourceLang {
 	case "Mandarin", "Chinese", "Zh", "zh-cn":
 		targetLang = "en"
 	case "English", "En":
@@ -54,11 +55,11 @@ func Action(c *cli.Context) error {
 		targetLang = ""
 	}
 
-	response, err := deeplx.Translate(content, "", targetLang)
+	response, err := deeplx.Translate(content, sourceLang, targetLang)
 	num := 0
 RETRY:
 	if err != nil {
-		result, errs := gdeeplx.Translate(content, "", targetLang, 0)
+		result, errs := gdeeplx.Translate(content, sourceLang, targetLang, 0)
 		response = strings.TrimSpace(result.(map[string]interface{})["data"].(string))
 		err = errs
 
