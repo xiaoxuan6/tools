@@ -3,10 +3,10 @@ package code
 import (
 	"bytes"
 	"fmt"
-	"github.com/OwO-Network/gdeeplx"
 	"github.com/atotto/clipboard"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"github.com/xiaoxuan6/deeplx"
 	"github.com/xiaoxuan6/tools/common"
 	"io/ioutil"
 	"net/http"
@@ -57,11 +57,11 @@ func Action(c *cli.Context) error {
 	}
 
 	response := strings.Split(string(b), "\n")
-	targetResponse, err := gdeeplx.Translate(response[0], "", "zh", 0)
+	targetResponse, err := deeplx.Translate(response[0], "", "zh")
 	if err != nil {
 		return fmt.Errorf(color.RedString("翻译失败：%s", err.Error()))
 	}
 
-	fmt.Println(color.GreenString("解释：%s", strings.TrimSpace(targetResponse.(map[string]interface{})["data"].(string))))
+	fmt.Println(color.GreenString("解释：%s", strings.TrimSpace(targetResponse)))
 	return nil
 }
