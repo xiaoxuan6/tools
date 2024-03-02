@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/glebarez/sqlite"
+	"github.com/gocarina/gocsv"
 	"github.com/mitchellh/go-homedir"
 	"github.com/urfave/cli/v2"
 	"gorm.io/gorm"
@@ -13,10 +14,12 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"sync"
 )
 
 var (
-	Db *gorm.DB
+	Db   *gorm.DB
+	lock sync.Mutex
 
 	browsers = map[string]string{
 		"chrome":  "",
@@ -24,19 +27,43 @@ var (
 		"edge":    "",
 	}
 
+	items = []string{"json", "csv"}
+
 	Command = &cli.Command{
 		Name:    "bookmarks",
 		Usage:   "将书签导出到文件中",
 		Aliases: []string{"b"},
-		Flags:   []cli.Flag{
+		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "browser",
 				Aliases:  []string{"b"},
 				Required: true,
 				Usage:    "支持浏览器 chrome、edge 或 firefox",
 			},
+			&cli.StringFlag{
+				Name:        "type",
+				Aliases:     []string{"t"},
+				Value:       "json",
+				DefaultText: "json",
+				Usage:       "导出文件类型，支持：json、csv",
+				Action: func(context *cli.Context, s string) error {
+
+					flag := false
+					for _, v := range items {
+						if v == s {
+							flag = true
+						}
+					}
+
+					if flag == false {
+						return fmt.Errorf("type [%s] not support", s)
+					}
+
+					return nil
+				},
+			},
 		},
-		Action:  Action,
+		Action: Action,
 	}
 )
 
@@ -54,8 +81,8 @@ type (
 	}
 
 	MozBookmarks struct {
-		Name string `gorm:"name" json:"name"`
-		Url  string `gorm:"url" json:"url"`
+		Name string `gorm:"name" json:"name" csv:"description"`
+		Url  string `gorm:"url" json:"url" csv:"url"`
 	}
 )
 
@@ -65,10 +92,7 @@ func Action(c *cli.Context) error {
 		return fmt.Errorf(color.RedString("不支持该浏览器"))
 	}
 
-	filename := fmt.Sprintf("%s_bookmarks.json", browser)
-	f, _ := os.Create(filename)
-	defer f.Close()
-
+	var bookmarkBar interface{}
 	switch browser {
 	case "chrome":
 		bookmarks := getChromeBookmarks()
@@ -86,8 +110,7 @@ func Action(c *cli.Context) error {
 			return fmt.Errorf(color.RedString("解析书签文件失败：%w", err))
 		}
 
-		b, _ = json.Marshal(bookmarkRoot.Roots.BookmarkBar)
-		_, _ = f.Write(b)
+		bookmarkBar = bookmarkRoot.Roots.BookmarkBar
 
 	case "edge":
 		bookmarks := getEdgeBookmarks()
@@ -105,8 +128,7 @@ func Action(c *cli.Context) error {
 			return fmt.Errorf(color.RedString("解析书签文件失败：%w", err))
 		}
 
-		b, _ = json.Marshal(bookmarkRoot.Roots.BookmarkBar)
-		_, _ = f.Write(b)
+		bookmarkBar = bookmarkRoot.Roots.BookmarkBar
 
 	case "firefox":
 		bookmarks := getFirefoxBookmarks()
@@ -129,13 +151,71 @@ func Action(c *cli.Context) error {
 			return fmt.Errorf(color.RedString("查询书签失败：%w", err))
 		}
 
-		b, _ := json.Marshal(bookmark)
-		_, _ = f.Write(b)
+		bookmarkBar = bookmark
 	}
 
-	fmt.Println(color.GreenString("书签文件已导出到当前目录下的 %s 文件中", filename))
+	save(browser, c.String("type"), bookmarkBar)
 	return nil
+}
 
+func save(browser, item string, data interface{}) {
+	switch item {
+	case "json":
+		filename := fmt.Sprintf("%s_bookmarks.json", browser)
+		f, _ := os.Create(filename)
+		defer f.Close()
+
+		b, _ := json.Marshal(data)
+		_, _ = f.Write(b)
+
+		fmt.Println(color.GreenString("书签文件已导出到当前目录下的 %s 文件中", filename))
+	case "csv":
+		filename := fmt.Sprintf("%s_bookmarks.csv", browser)
+		f, _ := os.OpenFile(filename, os.O_RDWR|os.O_CREATE, os.ModePerm)
+
+		MozBookmarksM := make([]MozBookmarks, 0, 50)
+		switch browser {
+		case "chrome", "edge":
+			dataBookmarks := data.(Bookmark)
+
+			var children []Bookmark
+			for _, val := range dataBookmarks.Children {
+				children = val.Children
+				if len(children) == 0 {
+					lock.Lock()
+					MozBookmarksM = append(MozBookmarksM, MozBookmarks{
+						Name: val.Name,
+						Url:  val.URL,
+					})
+					lock.Unlock()
+				} else {
+				CHILDREN:
+					for _, childrenVal := range children {
+						if len(childrenVal.Children) == 0 {
+							lock.Lock()
+							MozBookmarksM = append(MozBookmarksM, MozBookmarks{
+								Name: childrenVal.Name,
+								Url:  childrenVal.URL,
+							})
+							lock.Unlock()
+						} else {
+							children = childrenVal.Children
+							goto CHILDREN
+						}
+					}
+				}
+			}
+
+			data = MozBookmarksM
+		}
+
+		if err := gocsv.MarshalFile(data, f); err != nil {
+			fmt.Println(color.RedString("save fail: %s", err.Error()))
+			return
+		}
+
+		fmt.Println(color.GreenString("书签文件已导出到当前目录下的 %s 文件中", filename))
+	}
 }
 
 func getChromeBookmarks() string {

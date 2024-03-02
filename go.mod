@@ -10,6 +10,7 @@ require (
 	github.com/briandowns/spinner v1.23.0
 	github.com/fatih/color v1.15.0
 	github.com/glebarez/sqlite v1.10.0
+	github.com/gocarina/gocsv v0.0.0-20231116093920-b87c2d0e983a
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/tidwall/gjson v1.17.1
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
