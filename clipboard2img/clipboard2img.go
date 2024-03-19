@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -22,7 +23,7 @@ var Command = &cli.Command{
 }
 
 func Action(c *cli.Context) error {
-	if runtime.GOOS != "Windows" {
+	if strings.ToLower(runtime.GOOS) != "windows" {
 		return fmt.Errorf(color.RedString("当前系统不支持该命令, 仅支持 Windows 系统"))
 	}
 
