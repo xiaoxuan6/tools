@@ -1,5 +1,13 @@
 # 小工具
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/xiaoxuan6/tools/releaser.yml)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/xiaoxuan6/tools/total)
+![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads-pre/xiaoxuan6/tools/latest/total?sort=semver&style=plastic)
+![GitHub License](https://img.shields.io/github/license/xiaoxuan6/tools)
+![GitHub Repo stars](https://img.shields.io/github/stars/xiaoxuan6/tools?style=flat)
+![GitHub forks](https://img.shields.io/github/forks/xiaoxuan6/tools?style=flat)
+![GitHub Tag](https://img.shields.io/github/v/tag/xiaoxuan6/tools)
+
 ## Install
 
 ### CMD
