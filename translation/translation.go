@@ -1,11 +1,9 @@
 package translation
 
 import (
-	"errors"
 	"fmt"
 	"github.com/abadojack/whatlanggo"
 	"github.com/atotto/clipboard"
-	"github.com/avast/retry-go"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"github.com/xiaoxuan6/deeplx"
@@ -56,24 +54,12 @@ func Action(c *cli.Context) error {
 		targetLang = ""
 	}
 
-	var result string
-	err := retry.Do(
-		func() error {
-			response := deeplx.Translate(content, sourceLang, targetLang)
-			if response.Code != 200 {
-				return errors.New(response.Msg)
-			}
-
-			result = response.Data
-			return nil
-		},
-		retry.Attempts(3),
-		retry.LastErrorOnly(true),
-	)
+	response := deeplx.Translate(content, sourceLang, targetLang)
 	common.Stop()
 
-	if err != nil {
-		result = "翻译失败，翻译原文 => " + content
+	result := response.Data
+	if response.Code != 200 {
+		result = "翻译失败，翻译原文 => " + response.Msg
 	}
 
 	fmt.Println(color.GreenString("翻译结果："), strings.TrimSpace(result))

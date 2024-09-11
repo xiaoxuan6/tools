@@ -14,7 +14,7 @@ require (
 	github.com/tidwall/gjson v1.17.3
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
 	github.com/urfave/cli/v2 v2.25.7
-	github.com/xiaoxuan6/deeplx v0.0.6
+	github.com/xiaoxuan6/deeplx v0.0.5
 	golang.design/x/clipboard v0.7.0
 	gorm.io/gorm v1.25.5
 )

@@ -2,10 +2,8 @@ package code
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"github.com/atotto/clipboard"
-	"github.com/avast/retry-go"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
 	"github.com/xiaoxuan6/deeplx"
@@ -59,26 +57,11 @@ func Action(c *cli.Context) error {
 	}
 
 	response := strings.Split(string(b), "\n")
-
-	var result string
-	err = retry.Do(
-		func() error {
-			resp := deeplx.Translate(response[0], "", "zh")
-			if resp.Code != 200 {
-				return errors.New(resp.Msg)
-			}
-
-			result = resp.Data
-			return nil
-		},
-		retry.Attempts(3),
-		retry.LastErrorOnly(true),
-	)
-
-	if err != nil {
-		return fmt.Errorf(color.RedString("翻译失败：%s", err.Error()))
+	resp := deeplx.Translate(response[0], "", "zh")
+	if resp.Code != 200 {
+		return fmt.Errorf(color.RedString("翻译失败：%s", resp.Msg))
 	}
 
-	fmt.Println(color.GreenString("解释：%s", strings.TrimSpace(result)))
+	fmt.Println(color.GreenString("解释：%s", strings.TrimSpace(resp.Data)))
 	return nil
 }
