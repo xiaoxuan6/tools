@@ -1,10 +1,9 @@
 module github.com/xiaoxuan6/tools
 
-go 1.18
+go 1.22.5
 
 require (
 	github.com/Baozisoftware/qrcode-terminal-go v0.0.0-20170407111555-c0650d8dff0f
-	github.com/OwO-Network/gdeeplx v0.0.1
 	github.com/abadojack/whatlanggo v1.0.1
 	github.com/atotto/clipboard v0.1.4
 	github.com/briandowns/spinner v1.23.0
@@ -12,16 +11,15 @@ require (
 	github.com/glebarez/sqlite v1.10.0
 	github.com/gocarina/gocsv v0.0.0-20231116093920-b87c2d0e983a
 	github.com/mitchellh/go-homedir v1.1.0
-	github.com/tidwall/gjson v1.17.1
+	github.com/tidwall/gjson v1.17.3
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d
 	github.com/urfave/cli/v2 v2.25.7
-	github.com/xiaoxuan6/deeplx v0.0.2
+	github.com/xiaoxuan6/deeplx v0.0.6
 	golang.design/x/clipboard v0.7.0
 	gorm.io/gorm v1.25.5
 )
 
 require (
-	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/avast/retry-go v2.7.0+incompatible // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
