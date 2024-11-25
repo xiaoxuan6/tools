@@ -6,7 +6,6 @@ import (
 	"github.com/urfave/cli/v2"
 	"github.com/xiaoxuan6/tools/bookmarks"
 	"github.com/xiaoxuan6/tools/clipboard2img"
-	"github.com/xiaoxuan6/tools/code"
 	"github.com/xiaoxuan6/tools/host"
 	"github.com/xiaoxuan6/tools/ocr"
 	"github.com/xiaoxuan6/tools/qrcode"
@@ -22,7 +21,6 @@ func main() {
 		Usage: "tools",
 		Commands: []*cli.Command{
 			bookmarks.Command,
-			code.Command,
 			clipboard2img.Command,
 			host.Command,
 			translation.Command,
