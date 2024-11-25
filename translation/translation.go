@@ -42,13 +42,13 @@ func Action(c *cli.Context) error {
 	fmt.Println(color.RedString("翻译内容："), content)
 	common.Start("translations ")
 
-	info := whatlanggo.Detect(content)
-	sourceLang := info.Lang.String()
+	lang := whatlanggo.DetectLang(content)
+	sourceLang := strings.ToLower(lang.Iso6391())
 	var targetLang string
 	switch sourceLang {
-	case "Mandarin", "Chinese", "Zh", "zh-cn":
+	case "zh":
 		targetLang = "en"
-	case "English", "En":
+	case "so":
 		targetLang = "zh"
 	default:
 		targetLang = ""
@@ -59,7 +59,7 @@ func Action(c *cli.Context) error {
 
 	result := response.Data
 	if response.Code != 200 {
-		result = "翻译失败，翻译原文 => " + response.Msg
+		result = "翻译失败 => " + response.Msg
 	}
 
 	fmt.Println(color.GreenString("翻译结果："), strings.TrimSpace(result))
