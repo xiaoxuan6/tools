@@ -1,6 +1,7 @@
 package translation
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/abadojack/whatlanggo"
 	"github.com/atotto/clipboard"
@@ -63,5 +64,11 @@ func Action(c *cli.Context) error {
 	}
 
 	fmt.Println(color.GreenString("翻译结果："), strings.TrimSpace(result))
+
+	if c.Bool("verbose") {
+		b, _ := json.Marshal(response)
+		println(string(b))
+	}
+
 	return nil
 }

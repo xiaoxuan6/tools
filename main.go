@@ -19,6 +19,12 @@ func main() {
 	app := cli.App{
 		Name:  "tools",
 		Usage: "tools",
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:    "verbose",
+				Aliases: []string{"v"},
+			},
+		},
 		Commands: []*cli.Command{
 			bookmarks.Command,
 			clipboard2img.Command,
